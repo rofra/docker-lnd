@@ -43,6 +43,7 @@ services:
       - --debuglevel=debug                                # Debug level
       - --bitcoin.node=bitcoind                           # Bitcoind backend
       - --maxpendingchannels=10                           # Max Pending channels
+      - --bitcoind.rpchost=127.0.0.1                      # Your bitcoind IP address
       - --bitcoind.rpcuser=api                            # Your bitcoind RPC user
       - --bitcoind.rpcpass=api                            # Your bitcoind RPC password
       - --bitcoind.zmqpubrawblock=tcp://127.0.0.1:28332   # Your bitcoind ZMQ connections for raw blocks
