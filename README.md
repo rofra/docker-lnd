@@ -28,7 +28,6 @@ services:
     image: fedorage/lnd:latest
     container_name: lnd
     restart: unless-stopped
-    stop_signal: SIGKILL
     ports:
       - "0.0.0.0:9735:9735"                               # Daemon Listener
       - "0.0.0.0:9911:9911"                               # Watchtower
