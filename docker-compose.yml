@@ -13,6 +13,7 @@ services:
     volumes:
       - lnd-data:/data
     command:
+      - lnd
       - --bitcoin.active                                  # Connect to bitcoin network
       - --bitcoin.mainnet                                 # On mainnet
       - --debuglevel=debug                                # Debug level

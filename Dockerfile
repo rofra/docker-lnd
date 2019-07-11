@@ -36,6 +36,9 @@ VOLUME /data
 # Clear ENV variables
 RUN unset LND_GROUP LND_USER LND_VERSION LND_BASENAME LND_ARCHIVE LND_URL LND_SHA256
 
+COPY run_tests.sh /run_tests.sh
+RUN chmod a+x /run_tests.sh
+
 EXPOSE 9735 9911 10009 8080
 
 USER lnd
