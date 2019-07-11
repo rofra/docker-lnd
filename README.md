@@ -3,7 +3,7 @@
 This docker container is a tiny **alpine/adm64** compatible container, automatically built from Official lnd team releases on https://github.com/lightningnetwork/lnd/releases.
 
 ### Configuration File
-No configuration file is needed as you can add parameters to the "command" docker parameter. To see all options available, see reference file https://github.com/lightningnetwork/lnd/blob/master/sample-lnd.conf .
+No configuration file is needed as you can add parameters to the "command" docker parameter. To see all options available, see reference file https://github.com/lightningnetwork/lnd/blob/master/sample-lnd.conf
 
 If you wish to use a configuration file, change volume configuration to map your existing configuration file path.
 
@@ -17,10 +17,10 @@ You can use the sample docker-compose (v3) file below:
 version: '3'
 services:
   docker-lnd:
+    image: rofra/docker-lnd:latest
     container_name: lnd
     restart: unless-stopped
     stop_signal: SIGKILL
-    build: build/
     ports:
       - "0.0.0.0:9735:9735"                               # Daemon Listener
       - "0.0.0.0:9911:9911"                               # Watchtower
@@ -29,6 +29,7 @@ services:
     volumes:
       - lnd-data:/data
     command:
+      - lnd
       - --bitcoin.active                                  # Connect to bitcoin network
       - --bitcoin.mainnet                                 # On mainnet
       - --debuglevel=debug                                # Debug level
