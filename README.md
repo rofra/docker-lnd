@@ -19,7 +19,7 @@ If you wish to use a configuration file, change volume configuration to map your
 A persistant volume is created on the fly, linked to /home/lnd/.lnd directory.
 
 ### How to use ?
-You can use the sample docker-compose (v3) file below:
+You can use the sample docker-compose (v3) file below for **bitcoind** backend:
 
 ```yml
 version: '3'
@@ -43,11 +43,11 @@ services:
       - --debuglevel=debug                                # Debug level
       - --bitcoin.node=bitcoind                           # Bitcoind backend
       - --maxpendingchannels=10                           # Max Pending channels
-      - --bitcoind.rpchost=127.0.0.1                      # Your bitcoind IP address
-      - --bitcoind.rpcuser=api                            # Your bitcoind RPC user
-      - --bitcoind.rpcpass=api                            # Your bitcoind RPC password
-      - --bitcoind.zmqpubrawblock=tcp://127.0.0.1:28332   # Your bitcoind ZMQ connections for raw blocks
-      - --bitcoind.zmqpubrawtx=tcp://127.0.0.1:28333      # Your bitcoind ZMQ connections for raw transactions
+      - --bitcoind.rpchost=127.0.0.1                      # Bitcoind IP address
+      - --bitcoind.rpcuser=api                            # Bitcoind RPC user
+      - --bitcoind.rpcpass=api                            # Bitcoind RPC password
+      - --bitcoind.zmqpubrawblock=tcp://127.0.0.1:28332   # Bitcoind ZMQ connections for raw blocks
+      - --bitcoind.zmqpubrawtx=tcp://127.0.0.1:28333      # Bitcoind ZMQ connections for raw transactions
       - --alias=testnode                                  # Alias of your Node
       - --externalip=2.3.4.5                              # External IPV4 address
       - --color=#ffdc00                                   # Lightning node color
