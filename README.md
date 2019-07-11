@@ -24,7 +24,7 @@ You can use the sample docker-compose (v3) file below:
 ```yml
 version: '3'
 services:
-  docker-lnd:
+  lnd:
     image: fedorage/lnd:latest
     container_name: lnd
     restart: unless-stopped
@@ -71,14 +71,14 @@ docker-compose up -d
 ### How to use
 #### Example: get all the commands availables in lncli
 ```bash
-docker-compose exec docker-lnd lncli -h
+docker-compose exec lnd lncli -h
 ```
 #### Example: get your lightning node infos
 ```bash
-docker-compose exec docker-lnd lncli getinfo
+docker-compose exec lnd lncli getinfo
 ```
 #### Example: unlock your wall
 ```bash
-docker-compose exec docker-lnd lncli unlock
+docker-compose exec lnd lncli unlock
 ```
 
