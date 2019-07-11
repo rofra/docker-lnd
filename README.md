@@ -1,5 +1,7 @@
 # Lightning Network Daemon (lnd) docker container
 
+Star this project on Docker Hub :star2: https://hub.docker.com/r/fedorage/lnd
+
 ## Getting started
 This project is a personnal initiative base on the source code of in https://github.com/lightningnetwork/lnd .
 
