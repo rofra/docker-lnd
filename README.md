@@ -25,7 +25,7 @@ You can use the sample docker-compose (v3) file below:
 version: '3'
 services:
   docker-lnd:
-    image: rofra/docker-lnd:latest
+    image: fedorage/docker-lnd:latest
     container_name: lnd
     restart: unless-stopped
     stop_signal: SIGKILL
