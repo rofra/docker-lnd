@@ -26,7 +26,8 @@ You can use the sample docker-compose (v3) file below for **bitcoind** backend:
 ```yml
 version: '3'
 services:
-  docker-lnd:
+  lnd:
+    image: fedorage/lnd:latest
     container_name: lnd
     restart: unless-stopped
     stop_signal: SIGKILL
@@ -48,7 +49,9 @@ services:
       "--bitcoind.zmqpubrawtx=tcp://127.0.0.1:28333",     # Your bitcoind ZMQ connections for raw transactions
       "--alias=mynode",                                   # Alias of your Node
       "--externalip=2.3.4.5",                             # External IPV4 address
-      "--color=#ffdc00"                                   # Lightning node color
+      "--color=#ffdc00",                                  # Lightning node color
+      "--watchtower.active",                              # WatchTower enabled
+      "--watchtower.externalip=2.3.4.5"                   # External IPV4 address
     ]
     volumes:
       - lnd-data:/data
