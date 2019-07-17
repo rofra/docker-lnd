@@ -39,7 +39,12 @@ RUN unset LND_GROUP LND_USER LND_VERSION LND_BASENAME LND_ARCHIVE LND_URL LND_SH
 COPY run_tests.sh /run_tests.sh
 RUN chmod a+x /run_tests.sh
 
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod a+x /entrypoint.sh
+
 EXPOSE 9735 9911 10009 8080
+
+ENTRYPOINT ["/entrypoint.sh"]
 
 USER lnd
 CMD ["lnd"]

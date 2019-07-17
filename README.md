@@ -26,34 +26,35 @@ You can use the sample docker-compose (v3) file below for **bitcoind** backend:
 ```yml
 version: '3'
 services:
-  lnd:
-    image: fedorage/lnd:latest
+  docker-lnd:
     container_name: lnd
     restart: unless-stopped
+    stop_signal: SIGKILL
+    build: ./
     ports:
       - "0.0.0.0:9735:9735"                               # Daemon Listener
       - "0.0.0.0:9911:9911"                               # Watchtower
       - "0.0.0.0:10009:10009"                             # RPC Server
       - "0.0.0.0:8080:8080"                               # gRPC Server
+    command: [
+      "--bitcoin.active",                                 # Connect to bitcoin network
+      "--bitcoin.mainnet",                                # On mainnet
+      "--debuglevel=debug",                               # Debug level
+      "--bitcoin.node=bitcoind",                          # Bitcoind backend
+      "--maxpendingchannels=10",                          # Max Pending channels
+      "--bitcoind.rpcuser=api",                           # Your bitcoind RPC user
+      "--bitcoind.rpcpass=api",                           # Your bitcoind RPC password
+      "--bitcoind.zmqpubrawblock=tcp://127.0.0.1:28332",  # Your bitcoind ZMQ connections for raw blocks
+      "--bitcoind.zmqpubrawtx=tcp://127.0.0.1:28333",     # Your bitcoind ZMQ connections for raw transactions
+      "--alias=mynode",                                   # Alias of your Node
+      "--externalip=2.3.4.5",                             # External IPV4 address
+      "--color=#ffdc00"                                   # Lightning node color
+    ]
     volumes:
       - lnd-data:/data
-    command:
-      - lnd
-      - --bitcoin.active                                  # Connect to bitcoin network
-      - --bitcoin.mainnet                                 # On mainnet
-      - --debuglevel=debug                                # Debug level
-      - --bitcoin.node=bitcoind                           # Bitcoind backend
-      - --maxpendingchannels=10                           # Max Pending channels
-      - --bitcoind.rpchost=127.0.0.1                      # Bitcoind IP address
-      - --bitcoind.rpcuser=api                            # Bitcoind RPC user
-      - --bitcoind.rpcpass=api                            # Bitcoind RPC password
-      - --bitcoind.zmqpubrawblock=tcp://127.0.0.1:28332   # Bitcoind ZMQ connections for raw blocks
-      - --bitcoind.zmqpubrawtx=tcp://127.0.0.1:28333      # Bitcoind ZMQ connections for raw transactions
-      - --alias=testnode                                  # Alias of your Node
-      - --externalip=2.3.4.5                              # External IPV4 address
-      - --color=#ffdc00                                   # Lightning node color
 volumes:
   lnd-data:
+
 ```
 
 ## Interracting with your container
