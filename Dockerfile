@@ -32,7 +32,7 @@ RUN apk add --no-cache --virtual /tmp/.build-deps \
 
 # Download / Check / Install
 RUN cd /tmp \
-    # Import gpg and import signing key
+    # Get and import pgp signing key
     && curl ${GPG_KEYS_URL} | gpg --import \
     # Get Manifest and check it
     && wget -qO ${LND_MANIFEST} "${LND_MANIFEST_URL}" \
