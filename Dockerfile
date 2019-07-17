@@ -3,27 +3,54 @@ FROM amd64/alpine:3.10
 LABEL maintainer="rodolphe.franceschi@gmail.com"
 
 ENV LND_VERSION "v0.7.0-beta"
-ENV LND_SHA256 "2e7ed105b9e57103645bda30501cbf3386909cfed19a2fabcc3dc9117ce99a8f"
+
+ENV GPG_KEYS_URL "https://keybase.io/roasbeef/pgp_keys.asc"
 
 ENV LND_BASENAME "lnd-linux-amd64-${LND_VERSION}"
 ENV LND_ARCHIVE "${LND_BASENAME}.tar.gz"
 ENV LND_URL "https://github.com/lightningnetwork/lnd/releases/download/${LND_VERSION}/${LND_ARCHIVE}"
+
+ENV LND_MANIFEST "manifest-${LND_VERSION}.txt"
+ENV LND_MANIFEST_SIG "${LND_MANIFEST}.sig"
+ENV LND_MANIFEST_URL "https://github.com/lightningnetwork/lnd/releases/download/${LND_VERSION}/${LND_MANIFEST}"
+ENV LND_MANIFEST_SIGN_URL "https://github.com/lightningnetwork/lnd/releases/download/${LND_VERSION}/${LND_MANIFEST_SIG}"
+
 ENV LND_GROUP "lnd"
 ENV LND_USER "lnd"
 
+ENV DEPENDENCIES ""
 
 # Create lnd user + group
 RUN addgroup ${LND_GROUP} && \
     adduser -D -G ${LND_GROUP} lnd
 
-# Download + Install
+# Install dependencies
+RUN apk add --no-cache --virtual /tmp/.build-deps \
+    gnupg \
+    curl \
+    outils-sha256
+
+# Download / Check / Install
 RUN cd /tmp \
+    # Import gpg and import signing key
+    && curl ${GPG_KEYS_URL} | gpg --import \
+    # Get Manifest and check it
+    && wget -qO ${LND_MANIFEST} "${LND_MANIFEST_URL}" \
+    && wget -qO ${LND_MANIFEST_SIG} "${LND_MANIFEST_SIGN_URL}" \
+    && gpg --verify ${LND_MANIFEST_SIG} ${LND_MANIFEST} \
+    # Get LND and check the signature in the manifest
     && wget -qO ${LND_ARCHIVE} "${LND_URL}" \
-    && echo "${LND_SHA256}  ${LND_ARCHIVE}" | sha256sum -c - \
+    && SIGNATURELINE=$(sha256sum ${LND_ARCHIVE}) \
+    && grep ${SIGNATURELINE} ${LND_MANIFEST} \
+    # Install
     && tar -xzvf ${LND_ARCHIVE} \
     && mv ${LND_BASENAME}/* /usr/local/bin/ \
     && chmod a+x /usr/local/bin/lncli /usr/local/bin/lnd \
-    && rm -rf /tmp/${LND_BASENAME}
+    # Cleanup 
+    && rm -rf /tmp/${LND_BASENAME} /tmp/${LND_ARCHIVE} 
+
+# Cleanup dependencies
+RUN apk del /tmp/.build-deps
 
 # Create data directory
 ENV LND_DATA /data
@@ -34,7 +61,7 @@ RUN mkdir "$LND_DATA" \
 VOLUME /data
 
 # Clear ENV variables
-RUN unset LND_GROUP LND_USER LND_VERSION LND_BASENAME LND_ARCHIVE LND_URL LND_SHA256
+RUN unset LND_GROUP LND_USER LND_VERSION LND_BASENAME LND_ARCHIVE LND_URL GPG_KEYS_URL LND_MANIFEST LND_MANIFEST_SIG LND_MANIFEST_URL LND_MANIFEST_SIGN_URL
 
 COPY run_tests.sh /run_tests.sh
 RUN chmod a+x /run_tests.sh
