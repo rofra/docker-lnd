@@ -84,3 +84,20 @@ docker-compose exec lnd lncli getinfo
 docker-compose exec lnd lncli unlock
 ```
 
+## Releases
+### On Git
+We use **Github** for source versionning:
+- [Sources](https://github.com/rofra/docker-lnd)
+- [Releases](https://github.com/rofra/docker-lnd/releases)
+
+### On Docker Hub
+We use **Docker Hub** for image versioning and auto-building docker images:
+- [Project](https://hub.docker.com/r/fedorage/lnd)
+- [Releases](https://hub.docker.com/r/fedorage/lnd/tags)
+
+## Authors
+* **Rodolphe Franceschi** - *Initial work* - ([github](https://github.com/rofra) / [linkedin](https://www.linkedin.com/in/rodolphe-franceschi-2a47b636/))
+
+## License
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+
