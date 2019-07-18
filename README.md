@@ -8,7 +8,7 @@ This project is a personnal initiative base on the source code of in https://git
 This docker container is a tiny **alpine/adm64** compatible container, automatically built from Official lnd team releases on https://github.com/lightningnetwork/lnd/releases.
 
 ## What is Lightning Network ?
-The Lightning Network Daemon (`lnd`) - is a complete implementation of a [Lightning Network](https://lightning.network) node.  `lnd` has several pluggable back-end chain services including [`btcd`](https://github.com/btcsuite/btcd) (a full-node), [`bitcoind`](https://github.com/bitcoin/bitcoin), and [`neutrino`](https://github.com/lightninglabs/neutrino) (a new experimental light client). The project's codebase uses the
+The Lightning Network Daemon (`lnd`) is a complete implementation of a [Lightning Network](https://lightning.network) node.  `lnd` has several pluggable back-end chain services including [`btcd`](https://github.com/btcsuite/btcd) (a full-node), [`bitcoind`](https://github.com/bitcoin/bitcoin), and [`neutrino`](https://github.com/lightninglabs/neutrino) (a new experimental light client). The project's codebase uses the
 [btcsuite](https://github.com/btcsuite/) set of Bitcoin libraries, and also exports a large set of isolated re-usable Lightning Network related libraries within it. 
 
 
