@@ -2,7 +2,7 @@ FROM amd64/alpine:3.10
 
 LABEL maintainer="rodolphe.franceschi@gmail.com"
 
-ENV LND_VERSION "v0.7.0-beta"
+ENV LND_VERSION "v0.7.1-beta"
 
 ENV GPG_KEYS_URL "https://keybase.io/roasbeef/pgp_keys.asc"
 
