@@ -2,9 +2,10 @@ FROM amd64/alpine:3.10
 
 LABEL maintainer="rodolphe.franceschi@gmail.com"
 
-ENV LND_VERSION "v0.11.0-beta"
+ENV LND_VERSION "v0.11.1-beta"
 
-ENV GPG_KEYS_URL "https://keybase.io/roasbeef/pgp_keys.asc"
+#ENV GPG_KEYS_URL "https://keybase.io/roasbeef/pgp_keys.asc"
+ENV GPG_KEYS_URL "https://keybase.io/bitconner/pgp_keys.asc"
 
 ENV LND_BASENAME "lnd-linux-amd64-${LND_VERSION}"
 ENV LND_ARCHIVE "${LND_BASENAME}.tar.gz"
