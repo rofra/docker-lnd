@@ -2,19 +2,17 @@ FROM amd64/alpine:3.10
 
 LABEL maintainer="rodolphe.franceschi@gmail.com"
 
-ENV LND_VERSION "v0.11.1-beta"
+ENV LND_VERSION "v0.12.0-beta"
 
-#ENV GPG_KEYS_URL "https://keybase.io/roasbeef/pgp_keys.asc"
-ENV GPG_KEYS_URL "https://keybase.io/bitconner/pgp_keys.asc"
+ENV GPG_KEYS_URL "https://keybase.io/roasbeef/pgp_keys.asc"
+ENV GPG_KEYS_URL2 "https://keybase.io/bitconner/pgp_keys.asc"
 
 ENV LND_BASENAME "lnd-linux-amd64-${LND_VERSION}"
 ENV LND_ARCHIVE "${LND_BASENAME}.tar.gz"
 ENV LND_URL "https://github.com/lightningnetwork/lnd/releases/download/${LND_VERSION}/${LND_ARCHIVE}"
 
-ENV LND_MANIFEST "manifest-${LND_VERSION}.txt"
-ENV LND_MANIFEST_SIG "${LND_MANIFEST}.sig"
+ENV LND_MANIFEST "manifest-roasbeef-${LND_VERSION}.txt.asc"
 ENV LND_MANIFEST_URL "https://github.com/lightningnetwork/lnd/releases/download/${LND_VERSION}/${LND_MANIFEST}"
-ENV LND_MANIFEST_SIGN_URL "https://github.com/lightningnetwork/lnd/releases/download/${LND_VERSION}/${LND_MANIFEST_SIG}"
 
 ENV LND_GROUP "lnd"
 ENV LND_USER "lnd"
@@ -35,10 +33,10 @@ RUN apk add --no-cache --virtual /tmp/.build-deps \
 RUN cd /tmp \
     # Get and import pgp signing key
     && curl ${GPG_KEYS_URL} | gpg --import \
+    && curl ${GPG_KEYS_URL2} | gpg --import \
     # Get Manifest and check it
     && wget -qO ${LND_MANIFEST} "${LND_MANIFEST_URL}" \
-    && wget -qO ${LND_MANIFEST_SIG} "${LND_MANIFEST_SIGN_URL}" \
-    && gpg --verify ${LND_MANIFEST_SIG} ${LND_MANIFEST} \
+    && gpg --verify ${LND_MANIFEST} \
     # Get LND and check the signature in the manifest
     && wget -qO ${LND_ARCHIVE} "${LND_URL}" \
     && SIGNATURELINE=$(sha256sum ${LND_ARCHIVE}) \
